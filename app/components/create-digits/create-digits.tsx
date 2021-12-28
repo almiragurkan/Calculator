@@ -41,7 +41,6 @@ export const CreateDigits = observer(function CreateDigits(props: CreateDigitsPr
     for(let i=1;i<10;i++){
       digits.push(
         <CustomButton buttonStyles={bStyle} buttonTextStyles={props.buttonTextStyle}
-                      onPress={() => updateCalc(i.toString())}
                       key={"btn_" + i.toString()} buttonName={i.toString()}/>
       )
     }
@@ -49,8 +48,8 @@ export const CreateDigits = observer(function CreateDigits(props: CreateDigitsPr
   return (
     <View style={cStyle}>
       {digits}
-      <CustomButton buttonStyles={BUTTON} buttonTextStyles={props.buttonTextStyle} buttonName={"0"} onPress={() => calculate('0')}/>
-      <CustomButton buttonStyles={BUTTON} buttonTextStyles={props.buttonTextStyle} buttonName={","} onPress={() => calculate(',')}/>
+      <CustomButton buttonStyles={BUTTON} buttonTextStyles={props.buttonTextStyle} buttonName={"0"} />
+      <CustomButton buttonStyles={BUTTON} buttonTextStyles={props.buttonTextStyle} buttonName={","} />
       <CustomButton buttonStyles={BUTTON} buttonTextStyles={props.buttonTextStyle} buttonName={"="}/>
     </View>
   )

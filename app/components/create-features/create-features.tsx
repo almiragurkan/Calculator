@@ -34,7 +34,7 @@ export const CreateFeatures = observer(function CreateFeatures(props: CreateFeat
       <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"AC"} />
       <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"C"}/>
       <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"+/-"}/>
-      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"%"} onPress={() => calculate('%')}/>
+      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"%"}/>
     </View>
   )
 })

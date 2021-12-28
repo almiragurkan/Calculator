@@ -4,10 +4,6 @@ import { observer } from "mobx-react-lite"
 import { flatten } from "ramda"
 import { CustomButton } from "../custom-button/custom-button"
 
-import {
-  DemoScreen
-} from "../../screens/demo/demo-screen"
-
 const CONTAINER: ViewStyle = {
   justifyContent: "center",
 }
@@ -31,10 +27,10 @@ export const CreateOperands = observer(function CreateOperands(props: CreateOper
 
   return (
     <View style={cStyle}>
-      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"+"} onPress={() => DemoScreen.calculate('+')}/>
-      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"-"} onPress={() => calculate('-')}/>
-      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"/"} onPress={() => calculate('/')}/>
-      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"*"} onPress={() => calculate('*')}/>
+      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"+"} />
+      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"-"} />
+      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"/"} />
+      <CustomButton buttonStyles={props.buttonStyle} buttonTextStyles={props.buttonTextStyle} buttonName={"*"} />
     </View>
   )
 })
