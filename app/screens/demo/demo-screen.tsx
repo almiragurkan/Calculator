@@ -15,7 +15,6 @@ export const logoIgnite = require("./logo-ignite.png")
 export const logoUpvibe = { uri: "https://upvibe.net/img/logo2.png" }
 
 const sHeight = Dimensions.get("screen").height
-const sWidth = Dimensions.get("screen").width
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
@@ -51,34 +50,38 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const [operand, setOperand] = useState("")
     const [display, setDisplay] = useState("")
     const [displayResult, setDisplayResult] = useState("")
+    const [history, setHistory] = useState("")
 
 
     const operands = ["+" ,"-","*","/","%"]
     const numerals = ["1","2","3","4","5","6","7","8","9","0","."]
 
     const updateCalc = (digit) => {
-      setDisplayResult("")
+
       if (operands.includes(digit)) {
         if(operand.length<1){
+          setDisplayResult("")
           if(number1 ===''){
             setOperand("")
             setDisplay("")
           }else{
             setOperand(digit);
             setDisplay(number1 + digit)}
-
         }else if(operand.length>0){
           if(number2 === ''){
-            return null;
+            setDisplayResult("")
+            return null
           }
           else {
             setDisplayResult('=' + chooseAction(operand).toString())
+            setHistory(history+ "\n" +display)
             setNumber1(chooseAction(operand).toString())
             setNumber2("")
             setOperand(digit)
           }
         }
       }else if(numerals.includes(digit)){
+        setDisplayResult("")
           if (operand === '') {
             setNumber1(number1 + digit)
             console.log(number1 + digit)
@@ -89,10 +92,11 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setDisplay(number1 + operand +  number2 + digit)
           }
       }else if(digit === '='){
-        if((number1 === '' || number2 === '')){
+        if(number1 === '' || number2 === ''){
           return null;
         }else{
         console.log(number1, " ", operand, " ", number2, "=")
+        setHistory(history + "\n" + display)
         setDisplayResult('=' + chooseAction(operand).toString())
         console.log(chooseAction(operand))
         setNumber1(chooseAction(operand).toString())
@@ -103,6 +107,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
         setDisplay("")
         setDisplayResult("")
         resetRegisters()
+        setHistory("")
       }else if(digit==='C'){
         if(number2.length>0){
           setNumber2("")
@@ -189,15 +194,20 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           />
           {/* <Image source={logoUpvibe} style={IGNITE} /> */}
           <View style={{ flex: 1, height: sHeight * 0.91 }}>
-            <ScrollView style={{ flex: 0.4, flexDirection: "column", backgroundColor: "white ", }}>
-              <Text style={{ flex:0.75, color: "black", fontSize: 50, width:sWidth*0.95}}>
+            <View style={{ flex: 0.6, flexDirection: "column", backgroundColor: "white "}}>
+              <ScrollView style={{ flex:0.50,borderColor:'lightgrey', borderBottomWidth: 3}}>
+                <Text style={{color: "black", fontSize: 50, alignItems:"flex-end"}}>
+                  {history}
+                </Text>
+              </ScrollView>
+              <Text style={{ flex:0.25, color: "black", fontSize: 50, alignItems:"flex-end"}}>
                 {display}
               </Text>
-              <Text style={{ flex:0.25, color: "black", fontSize: 50, width:sWidth*0.95}}>
+              <Text style={{ flex:0.25, color: "black", fontSize: 50, alignItems:"flex-end"}}>
                 {displayResult}
               </Text>
-            </ScrollView>
-            <View style={{ flex: 0.6, flexDirection: "column", backgroundColor: "white" }}>
+            </View>
+            <View style={{ flex: 0.4, flexDirection: "column", backgroundColor: "white" }}>
               <View style={{ flex: 0.2, justifyContent: "center", flexDirection: "row" }}>
                 <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"AC"} onPress={() => updateCalc('AC')} />
                 <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"C"} onPress={() => updateCalc('C')}/>
