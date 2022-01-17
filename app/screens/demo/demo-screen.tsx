@@ -52,12 +52,11 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const [display, setDisplay] = useState("")
     const [displayResult, setDisplayResult] = useState("")
 
-    const operands = ["+" ,"-","*","/"]
-    const numerals = ["1","2","3","4","5","6","7","8","9","0"]
+    const operands = ["+" ,"-","*","/","%"]
+    const numerals = ["1","2","3","4","5","6","7","8","9","0","."]
 
     const updateCalc = (digit) => {
       setDisplayResult("")
-
       if (operands.includes(digit)) {
         if(operand.length<1){
           setOperand(digit);
@@ -68,7 +67,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setNumber1(number1 + digit)
             console.log(number1 + digit)
             setDisplay(number1 + digit)
-          } else {
+          }else {
             setNumber2(number2 + digit)
             console.log(number1, " ", operand, " ", number2 + digit)
             setDisplay(number1 + operand +  number2 + digit)
@@ -81,13 +80,20 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       }else if(digit === 'AC'){
         setDisplay("")
         setDisplayResult("")
+        resetRegisters()
       }else if(digit==='C'){
-        if(number2.length>1){
+        if(number2.length>0){
           setNumber2("")
-        }else if(operand.length>1){
+          setDisplay(number1+operand)
+          console.log(display)
+        }else if(operand.length>0){
           setOperand("")
-        }else if(number1.length>1){
+          setDisplay(number1)
+          console.log(display)
+        }else if(number1.length>0){
           setNumber1("")
+          setDisplay("")
+          console.log(display)
         }
       }
     }
@@ -103,6 +109,8 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           return division(number1, number2);
         case '*':
           return multiplication(number1, number2);
+        case'%':
+          return percentage(number1);
         default:
           return null;
       }
@@ -122,6 +130,10 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
 
     const multiplication = (number1, number2) => {
       return parseFloat(number1) * parseFloat(number2);
+    }
+    const percentage = (number1) => {
+      return (parseFloat(number1) / 100) ;
+
     }
 
     const resetRegisters = () => {
@@ -167,15 +179,15 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
               <View style={{ flex: 0.2, justifyContent: "center", flexDirection: "row" }}>
                 <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"AC"} onPress={() => updateCalc('AC')} />
                 <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"C"} onPress={() => updateCalc('C')}/>
-                <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"+/-"} onPress={() => updateCalc('+/-')}/>
                 <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={"%"} onPress={() => updateCalc('%')}/>
+                <CustomButton buttonStyles={{ backgroundColor: "lightblue" }} buttonName={""}/>
               </View>
               <View style={{ flex: 0.8, flexDirection: "row" }}>
                 <View style={{ flex: 0.75, flexDirection: "column" }}>
                   <View style={{flexWrap:"wrap", justifyContent: "center", flexDirection: "row", flex:1}}>
                     {digits}
                     <CustomButton buttonStyles={BUTTON} buttonName={"0"} onPress={() => updateCalc('0')}/>
-                    <CustomButton buttonStyles={BUTTON} buttonName={","} onPress={() => updateCalc(',')}/>
+                    <CustomButton buttonStyles={BUTTON} buttonName={"."} onPress={() => updateCalc('.')}/>
                     <CustomButton buttonStyles={BUTTON} buttonName={"="} onPress={() => updateCalc('=')}/>
                   </View>
                 </View>
