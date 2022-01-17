@@ -52,6 +52,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const [display, setDisplay] = useState("")
     const [displayResult, setDisplayResult] = useState("")
 
+
     const operands = ["+" ,"-","*","/","%"]
     const numerals = ["1","2","3","4","5","6","7","8","9","0","."]
 
@@ -59,8 +60,23 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       setDisplayResult("")
       if (operands.includes(digit)) {
         if(operand.length<1){
-          setOperand(digit);
-          setDisplay(number1 + digit)
+          if(number1 ===''){
+            setOperand("")
+            setDisplay("")
+          }else{
+            setOperand(digit);
+            setDisplay(number1 + digit)}
+
+        }else if(operand.length>0){
+          if(number2 === ''){
+            return null;
+          }
+          else {
+            setDisplayResult('=' + chooseAction(operand).toString())
+            setNumber1(chooseAction(operand).toString())
+            setNumber2("")
+            setOperand(digit)
+          }
         }
       }else if(numerals.includes(digit)){
           if (operand === '') {
@@ -73,10 +89,16 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setDisplay(number1 + operand +  number2 + digit)
           }
       }else if(digit === '='){
+        if((number1 === '' || number2 === '')){
+          return null;
+        }else{
         console.log(number1, " ", operand, " ", number2, "=")
-        setDisplayResult(chooseAction(operand).toString())
+        setDisplayResult('=' + chooseAction(operand).toString())
         console.log(chooseAction(operand))
-        resetRegisters()
+        setNumber1(chooseAction(operand).toString())
+        setOperand("")
+        setNumber2("")
+        }
       }else if(digit === 'AC'){
         setDisplay("")
         setDisplayResult("")
@@ -110,7 +132,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
         case '*':
           return multiplication(number1, number2);
         case'%':
-          return percentage(number1);
+          return percentage(number1, number2);
         default:
           return null;
       }
@@ -131,8 +153,8 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const multiplication = (number1, number2) => {
       return parseFloat(number1) * parseFloat(number2);
     }
-    const percentage = (number1) => {
-      return (parseFloat(number1) / 100) ;
+    const percentage = (number1, number2) => {
+      return (parseFloat(number1) / 100 * number2) ;
 
     }
 
