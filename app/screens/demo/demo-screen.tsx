@@ -11,7 +11,6 @@ import {
 import { NavigatorParamList } from "../../navigators"
 import { color, spacing } from "../../theme"
 
-export const logoIgnite = require("./logo-ignite.png")
 export const logoUpvibe = { uri: "https://upvibe.net/img/logo2.png" }
 
 const sHeight = Dimensions.get("screen").height
@@ -184,7 +183,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     return (
       <View testID="DemoScreen" style={FULL}>
         <GradientBackground colors={["#ffffff", "#ffffff"]} />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+        <Screen style={CONTAINER} preset="scroll" backgroundColor="white">
           <Header
             headerTx="demoScreen.calculator"
             leftIcon="back"
