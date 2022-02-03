@@ -9,7 +9,7 @@ import { flatten } from "ramda"
 } */
 const BUTTON: ViewStyle = {
   flex:1,
-  backgroundColor: 'rgba(93,92,92,0.49)',
+  backgroundColor: 'rgba(93,92,92,0.17)',
   borderWidth: 1,
   borderColor: 'black',
   borderRadius: 10,

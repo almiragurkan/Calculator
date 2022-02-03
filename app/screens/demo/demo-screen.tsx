@@ -44,7 +44,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const [history, setHistory] = useState("")
 
 
-    const operands = ["+", "-", "*", "/", "%","^"]
+    const operands = ["+", "-", "x", "/", "%","^"]
     const specialOperands = ["√","∛","²","³"]
     const numerals = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."]
 
@@ -142,7 +142,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           return subtraction(number1, number2)
         case "/":
           return division(number1, number2)
-        case "*":
+        case "x":
           return multiplication(number1, number2)
         case "%":
           return percentage(number1, number2)
@@ -215,44 +215,35 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     }
 
 
-    const digits = []
-    for (let i = 1; i < 10; i++) {
-      digits.push(
-        <CustomButton buttonStyles={{ flex: undefined, width: "33.33%", height: "25%" }}
-                      key={"btn_" + i.toString()} buttonName={i.toString()}
-                      onPress={() => updateCalc(i.toString())} />,
-      )
-    }
-
-
     return (
       <View testID="DemoScreen" style={FULL}>
-        <GradientBackground colors={["#000000", "#000000"]} />
-        <Screen style={CONTAINER} backgroundColor="black">
+        <Screen style={CONTAINER}>
+          <GradientBackground colors={["#000000", "#000000"]} />
           <Header
             headerTx="demoScreen.calculator"
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
           <View style={FULL}>
-            <View style={{flex:0.4, flexDirection: "column", justifyContent:"flex-end", alignItems:"flex-end", backgroundColor:"rgba(93,92,92,0.3)" }}>
-              <Text style={{
-                color: "rgba(192,191,191,0.78)",
-                fontSize: 35,
-                paddingEnd: 10,
-                textAlign:"right"
-              }}>
-                {display}
-              </Text>
-              <Text style={{
-                color: "white", fontSize: 55, paddingEnd: 10,
-                textAlign:"right",
-                marginBottom: 25
-              }}>
-                {displayResult}
-              </Text>
+            <View style={{flex:0.4, flexDirection: "column", justifyContent:"flex-end", alignItems:"flex-end", backgroundColor:"rgb(0,0,0)" }}>
+                <Text style={{
+                  color: "rgba(192,191,191,0.78)",
+                  fontSize: 35,
+                  paddingEnd: 10,
+                  textAlign:"right"
+                }}>
+                  {display}
+                </Text>
+                <Text style={{
+                  color: "white", fontSize: 55, paddingEnd: 10,
+                  textAlign:"right",
+                  marginBottom: 25
+                }}>
+                  {displayResult}
+                </Text>
             </View>
             <View style={{ flex: 0.6, flexDirection:"row"}}>
+              <GradientBackground colors={["#434343", "#000000"]} />
               <View style={{ flex:0.75, flexDirection: "column",alignContent:"space-around", paddingTop:10, paddingStart:10, paddingBottom:10 }}>
                 <View style={{flex:0.2,flexDirection: "row"}}>
                   <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"√"}
@@ -320,5 +311,5 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
   },
 )
 
-const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = { backgroundColor: "#103b48" }
-const STYLES_EQUAL_BUTTON_BASIC: ViewStyle = { backgroundColor: "rgba(0,206,209,0.87)" }
+const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = { backgroundColor: "#052a34" }
+const STYLES_EQUAL_BUTTON_BASIC: ViewStyle = { backgroundColor: "rgb(2,191,194)" }
