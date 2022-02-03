@@ -9,19 +9,18 @@ import { flatten } from "ramda"
 } */
 const BUTTON: ViewStyle = {
   flex:1,
-  backgroundColor: 'white',
-  borderWidth: 2,
-  borderColor: 'lightgrey',
-  borderRadius: 15,
+  backgroundColor: 'rgba(93,92,92,0.49)',
+  borderWidth: 1,
+  borderColor: 'black',
+  borderRadius: 10,
   flexDirection: "row",
-  justifyContent:'center',
-  alignItems:'center'
+  alignItems:'center',
+  margin:7
 }
 
 const BUTTON_TEXT: TextStyle = {
   flex:1,
-  color: 'black',
-  fontWeight: 'bold',
+  color: 'white',
   fontSize: 30,
   textAlign: 'center',
   alignItems:'center',

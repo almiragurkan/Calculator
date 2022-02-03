@@ -1,23 +1,19 @@
 import React, { FC, useState } from "react"
-import { Dimensions, ScrollView, /* ImageStyle, */ Text, TextStyle, View, ViewStyle } from "react-native"
+import { Text, TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import {
   Header,
   Screen,
-  /*   AutoImage as Image, */
   GradientBackground, CustomButton,
 } from "../../components"
 import { NavigatorParamList } from "../../navigators"
 import { color, spacing } from "../../theme"
 
-export const logoUpvibe = { uri: "https://upvibe.net/img/logo2.png" }
 
-const sHeight = Dimensions.get("screen").height
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
-  paddingHorizontal: spacing[4],
 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const HEADER: TextStyle = {
@@ -32,17 +28,12 @@ const HEADER_TITLE: TextStyle = {
   lineHeight: 15,
   textAlign: "center",
   letterSpacing: 1.5,
-  color: "lightsteelblue",
+  color: "#696868",
 }
-const BUTTON: ViewStyle = {
-  flex: undefined,
-  width: "33.33%",
-  height: "25%",
-}
+
 
 export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
-    const goBack = () => navigation.goBack()
 
     const [number1, setNumber1] = useState("")
     const [number2, setNumber2] = useState("")
@@ -74,7 +65,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setDisplayResult("")
             return null
           } else {
-            setDisplayResult("=" + chooseAction(operand).toString())
+            setDisplayResult(chooseAction(operand).toString())
             setHistory(history + "\n" + display)
             setNumber1(chooseAction(operand).toString())
             setNumber2("")
@@ -114,7 +105,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
         } else {
           __DEV__ && console.log(number1, " ", operand, " ", number2, "=")
           setHistory(history + "\n" + display)
-          setDisplayResult("=" + chooseAction(operand).toString())
+          setDisplayResult(chooseAction(operand).toString())
           __DEV__ && console.log(chooseAction(operand))
           setNumber1(chooseAction(operand).toString())
           setOperand("")
@@ -168,7 +159,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       }
     }
     const chooseSpecialAction = (specialOperand) => {
-        switch (specialOperand) {
+      switch (specialOperand) {
         case "√":
           return squareRoot(number1)
         case "∛":
@@ -236,93 +227,98 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
 
     return (
       <View testID="DemoScreen" style={FULL}>
-        <GradientBackground colors={["#ffffff", "#ffffff"]} />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor="white">
+        <GradientBackground colors={["#000000", "#000000"]} />
+        <Screen style={CONTAINER} backgroundColor="black">
           <Header
             headerTx="demoScreen.calculator"
-            leftIcon="back"
-            onLeftPress={goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          {/* <Image source={logoUpvibe} style={IGNITE} /> */}
-          <View style={{ flex: 1, height: sHeight * 0.85 }}>
-            <View style={{ flex: 0.6, flexDirection: "column", backgroundColor: "white " }}>
-              <ScrollView style={{
-                flex: 0.50,
-                borderColor: color.palette.offWhite,
-                borderWidth: 1,
-                paddingEnd: 7,
-                borderRadius: 15,
-                marginBottom: 3,
-                backgroundColor: color.palette.lighterGrey
-              }}>
-                <Text style={{ color: "black", fontSize: 35, textAlign:"right" }}>
-                  {history}
-                </Text>
-              </ScrollView>
+          <View style={FULL}>
+            <View style={{flex:0.4, flexDirection: "column", justifyContent:"flex-end", alignItems:"flex-end", backgroundColor:"rgba(93,92,92,0.3)" }}>
               <Text style={{
-                flex: 0.15,
-                color: "black",
+                color: "rgba(192,191,191,0.78)",
                 fontSize: 35,
-                borderColor: color.palette.lighterGrey,
-                borderWidth: 1,
-                borderRadius: 15,
                 paddingEnd: 10,
-                marginBottom: 3,
                 textAlign:"right"
               }}>
                 {display}
               </Text>
               <Text style={{
-                flex: 0.13, color: "black", fontSize: 35, paddingEnd: 10, borderColor: color.palette.lighterGrey,
-                borderWidth: 1,
-                borderRadius: 15,
+                color: "white", fontSize: 55, paddingEnd: 10,
                 textAlign:"right",
                 marginBottom: 25
               }}>
                 {displayResult}
               </Text>
             </View>
-            <View style={{ flex: 0.4, flexDirection: "column", backgroundColor: "white" }}>
-              <View style={{ flex: 0.2, justifyContent: "center", flexDirection: "row" }}>
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"AC"}
-                              onPress={() => updateCalc("AC")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"²"}
-                              onPress={() => updateCalc("²")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"^"}
-                              onPress={() => updateCalc("^")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"√"}
-                              onPress={() => updateCalc("√")}/>
-              </View>
-              <View style={{ flex: 0.8, flexDirection: "row" }}>
-                <View style={{ flex: 0.75, flexDirection: "column" }}>
-                  <View style={{ flexWrap: "wrap", justifyContent: "center", flexDirection: "row", flex: 1 }}>
-                    {digits}
-                    <CustomButton buttonStyles={BUTTON} buttonName={"0"} onPress={() => updateCalc("0")} />
-                    <CustomButton buttonStyles={BUTTON} buttonName={"."} onPress={() => updateCalc(".")} />
-                    <CustomButton buttonStyles={BUTTON} buttonName={"="} onPress={() => updateCalc("=")} />
-                  </View>
+            <View style={{ flex: 0.6, flexDirection:"row"}}>
+              <View style={{ flex:0.75, flexDirection: "column",alignContent:"space-around", paddingTop:10, paddingStart:10, paddingBottom:10 }}>
+                <View style={{flex:0.2,flexDirection: "row"}}>
+                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"√"}
+                                 onPress={() => updateCalc("√")} />
+                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"x²"}
+                                 onPress={() => updateCalc("²")} />
+                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"^"}
+                                 onPress={() => updateCalc("^")} />
                 </View>
-                <View style={{ flex: 0.25, flexDirection: "column", justifyContent: "center" }}>
+                <View style={{flex:0.2,flexDirection: "row"}}>
+                  <CustomButton  buttonName={"7"}
+                                 onPress={() => updateCalc("7")} />
+                  <CustomButton  buttonName={"8"}
+                                 onPress={() => updateCalc("8")} />
+                  <CustomButton  buttonName={"9"}
+                                 onPress={() => updateCalc("9")} />
 
-                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"+"}
-                                onPress={() => updateCalc("+")} />
-                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"-"}
-                                onPress={() => updateCalc("-")} />
-                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"/"}
-                                onPress={() => updateCalc("/")} />
-                  <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"*"}
-                                onPress={() => updateCalc("*")} />
                 </View>
+                <View style={{flex:0.2,flexDirection: "row"}}>
+                  <CustomButton  buttonName={"4"}
+                                 onPress={() => updateCalc("4")} />
+                  <CustomButton  buttonName={"5"}
+                                 onPress={() => updateCalc("5")} />
+                  <CustomButton  buttonName={"6"}
+                                 onPress={() => updateCalc("6")} />
+
+                </View>
+                <View style={{flex:0.2,flexDirection: "row"}}>
+                  <CustomButton  buttonName={"1"}
+                                 onPress={() => updateCalc("1")} />
+                  <CustomButton  buttonName={"2"}
+                                 onPress={() => updateCalc("2")} />
+                  <CustomButton  buttonName={"3"}
+                                 onPress={() => updateCalc("3")} />
+
+                </View>
+                <View style={{flex:0.2,flexDirection: "row"}}>
+                  <CustomButton  buttonName={"."}
+                                 onPress={() => updateCalc(".")} />
+                  <CustomButton  buttonName={"0"}
+                                 onPress={() => updateCalc("0")} />
+                  <CustomButton  buttonName={"AC"}
+                                 onPress={() => updateCalc("AC")} />
+                </View>
+
               </View>
+              <View style={{ flex:0.25, flexDirection: "column",alignContent:"space-around", paddingTop:10, paddingEnd:10, paddingBottom:10 }}>
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"/"}
+                               onPress={() => updateCalc("/")} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"x"}
+                               onPress={() => updateCalc("x")} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"+"}
+                              onPress={() => updateCalc("+")} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC}  buttonName={"-"}
+                              onPress={() => updateCalc("-")}/>
+                <CustomButton buttonStyles={STYLES_EQUAL_BUTTON_BASIC} buttonName={"="}
+                              onPress={() => updateCalc("=")}/>
+              </View>
+
             </View>
           </View>
-
         </Screen>
       </View>
     )
   },
 )
 
-const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = { backgroundColor: "lightsteelblue" }
+const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = { backgroundColor: "#103b48" }
+const STYLES_EQUAL_BUTTON_BASIC: ViewStyle = { backgroundColor: "rgba(0,206,209,0.87)" }
