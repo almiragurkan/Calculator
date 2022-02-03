@@ -47,12 +47,14 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const [number1, setNumber1] = useState("")
     const [number2, setNumber2] = useState("")
     const [operand, setOperand] = useState("")
+    const [specialOperand, setSpecialOperand] = useState("")
     const [display, setDisplay] = useState("0")
     const [displayResult, setDisplayResult] = useState("0")
     const [history, setHistory] = useState("")
 
 
-    const operands = ["+", "-", "*", "/", "%"]
+    const operands = ["+", "-", "*", "/", "%","^"]
+    const specialOperands = ["√","∛","²","³"]
     const numerals = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "."]
 
     const updateCalc = (digit) => {
@@ -79,13 +81,29 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setOperand(digit)
           }
         }
-      } else if (numerals.includes(digit)) {
+      }else if(specialOperands.includes(digit)){
+        if(operand === ""){
+          setSpecialOperand(digit)
+          if (specialOperand==="√" || specialOperand==="∛"){
+            setDisplay(specialOperand + number1)
+            __DEV__ && console.log(specialOperand + number1)
+            setHistory(history + "\n" + specialOperand + number1)
+          }else{
+            setDisplay(number1 + specialOperand)
+            __DEV__ && console.log(number1 + specialOperand)
+            setHistory(history + "\n" + number1 + specialOperand)
+          }
+          setDisplayResult(chooseSpecialAction(specialOperand).toString())
+          __DEV__ && console.log(chooseSpecialAction(specialOperand))
+          setNumber1(chooseAction(specialOperand).toString())
+        }
+      }else if (numerals.includes(digit)) {
         setDisplayResult("")
         if (operand === "") {
           setNumber1(number1 + digit)
           __DEV__ && console.log(number1 + digit)
           setDisplay(number1 + digit)
-        } else {
+        }else {
           setNumber2(number2 + digit)
           __DEV__ && console.log(number1, " ", operand, " ", number2 + digit)
           setDisplay(number1 + operand + number2 + digit)
@@ -135,8 +153,30 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           return division(number1, number2)
         case "*":
           return multiplication(number1, number2)
-        case"%":
+        case "%":
           return percentage(number1, number2)
+        case "^":
+          return exponential(number1,number2)
+        case "√":
+          return squareRoot(number1)
+        case "∛":
+          return cubeRoot(number1)
+        case "²":
+          return square(number1)
+        default:
+          return null
+      }
+    }
+    const chooseSpecialAction = (specialOperand) => {
+        switch (specialOperand) {
+        case "√":
+          return squareRoot(number1)
+        case "∛":
+          return cubeRoot(number1)
+        case "²":
+          return square(number1)
+        case "³":
+          return cube(number1)
         default:
           return null
       }
@@ -159,8 +199,23 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     }
     const percentage = (number1, number2) => {
       return (parseFloat(number1) / 100 * number2)
-
     }
+    const squareRoot = (number1) => {
+      return (Math.sqrt(parseFloat(number1)))
+    }
+    const cubeRoot = (number1) => {
+      return (Math.cbrt(parseFloat(number1)))
+    }
+    const square = (number1) => {
+      return (Math.pow(parseFloat(number1),2))
+    }
+    const cube = (number1) => {
+      return (Math.pow(parseFloat(number1),3))
+    }
+    const exponential = (number1,number2) => {
+      return (Math.pow(parseFloat(number1),number2))
+    }
+
 
     const resetRegisters = () => {
       setNumber1("")
@@ -233,11 +288,12 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
               <View style={{ flex: 0.2, justifyContent: "center", flexDirection: "row" }}>
                 <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"AC"}
                               onPress={() => updateCalc("AC")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"C"}
-                              onPress={() => updateCalc("C")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"%"}
-                              onPress={() => updateCalc("%")} />
-                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={""} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"²"}
+                              onPress={() => updateCalc("²")} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"^"}
+                              onPress={() => updateCalc("^")} />
+                <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"√"}
+                              onPress={() => updateCalc("√")}/>
               </View>
               <View style={{ flex: 0.8, flexDirection: "row" }}>
                 <View style={{ flex: 0.75, flexDirection: "column" }}>
