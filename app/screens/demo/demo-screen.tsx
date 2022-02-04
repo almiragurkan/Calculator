@@ -73,7 +73,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           }
         }
       }else if(specialOperands.includes(digit)){
-        if(operand === ""){
+
           setSpecialOperand(digit)
           if (digit==="√" || digit==="∛"){
             setDisplay(digit + number1)
@@ -85,7 +85,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           setDisplayResult(chooseSpecialAction(digit).toString())
           __DEV__ && console.log(chooseSpecialAction(digit))
           setNumber1(chooseSpecialAction(digit).toString())
-        }
+        
       }else if (numerals.includes(digit)) {
         setDisplayResult("")
         if (operand === "") {
