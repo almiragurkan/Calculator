@@ -75,18 +75,16 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       }else if(specialOperands.includes(digit)){
         if(operand === ""){
           setSpecialOperand(digit)
-          if (specialOperand==="√" || specialOperand==="∛"){
-            setDisplay(specialOperand + number1)
-            __DEV__ && console.log(specialOperand + number1)
-            setHistory(history + "\n" + specialOperand + number1)
+          if (digit==="√" || digit==="∛"){
+            setDisplay(digit + number1)
+            __DEV__ && console.log(digit + number1)
           }else{
-            setDisplay(number1 + specialOperand)
-            __DEV__ && console.log(number1 + specialOperand)
-            setHistory(history + "\n" + number1 + specialOperand)
+            setDisplay(number1 + digit)
+            __DEV__ && console.log(number1 + digit)
           }
-          setDisplayResult(chooseSpecialAction(specialOperand).toString())
-          __DEV__ && console.log(chooseSpecialAction(specialOperand))
-          setNumber1(chooseAction(specialOperand).toString())
+          setDisplayResult(chooseSpecialAction(digit).toString())
+          __DEV__ && console.log(chooseSpecialAction(digit))
+          setNumber1(chooseSpecialAction(digit).toString())
         }
       }else if (numerals.includes(digit)) {
         setDisplayResult("")
@@ -108,12 +106,11 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           setDisplayResult(chooseAction(operand).toString())
           __DEV__ && console.log(chooseAction(operand))
           setNumber1(chooseAction(operand).toString())
-          setOperand("")
           setNumber2("")
         }
       } else if (digit === "AC") {
-        setDisplay("")
-        setDisplayResult("")
+        setDisplay("0")
+        setDisplayResult("0")
         resetRegisters()
         setHistory("")
       } else if (digit === "C") {
@@ -148,12 +145,6 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           return percentage(number1, number2)
         case "^":
           return exponential(number1,number2)
-        case "√":
-          return squareRoot(number1)
-        case "∛":
-          return cubeRoot(number1)
-        case "²":
-          return square(number1)
         default:
           return null
       }
@@ -174,37 +165,37 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     }
 
     const addition = (number1, number2) => {
-      return parseFloat(number1) + parseFloat(number2)
+      return ((parseFloat(number1)) + (parseFloat(number2)))
     }
 
     const subtraction = (number1, number2) => {
-      return parseFloat(number1) - parseFloat(number2)
+      return ((parseFloat(number1)) - (parseFloat(number2)))
     }
 
     const division = (number1, number2) => {
-      return parseFloat(number1) / parseFloat(number2)
+      return ((parseFloat(number1)) / (parseFloat(number2)))
     }
 
     const multiplication = (number1, number2) => {
-      return parseFloat(number1) * parseFloat(number2)
+      return ((parseFloat(number1)) * (parseFloat(number2)))
     }
     const percentage = (number1, number2) => {
-      return (parseFloat(number1) / 100 * number2)
+      return ((parseFloat(number1)) / 100 * (parseFloat(number2)))
     }
     const squareRoot = (number1) => {
       return (Math.sqrt(parseFloat(number1)))
     }
     const cubeRoot = (number1) => {
-      return (Math.cbrt(parseFloat(number1)))
+      return (Math.cbrt((parseFloat(number1))))
     }
     const square = (number1) => {
-      return (Math.pow(parseFloat(number1),2))
+      return (Math.pow((parseFloat(number1)),2))
     }
     const cube = (number1) => {
-      return (Math.pow(parseFloat(number1),3))
+      return (Math.pow((parseFloat(number1)),3))
     }
     const exponential = (number1,number2) => {
-      return (Math.pow(parseFloat(number1),number2))
+      return (Math.pow((parseFloat(number1)),number2))
     }
 
 
@@ -212,6 +203,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       setNumber1("")
       setNumber2("")
       setOperand("")
+      setSpecialOperand("")
     }
 
 
