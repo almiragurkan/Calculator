@@ -1,10 +1,8 @@
 {
-  "name": "Hesapcim",
-  "displayName": "Hesapcim",
   "expo": {
     "name": "Hesapcim",
     "slug": "Hesapcim",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -19,13 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
+      "supportsTablet": true,
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "net.upvibe.hesapcim"
     },
     "android": {
-      "package": "net.upvibe.hesapcim"
+      "package": "net.upvibe.hesapcim",
+      "versionCode": 2,
+      "permissions": []
     }
   }
 }
