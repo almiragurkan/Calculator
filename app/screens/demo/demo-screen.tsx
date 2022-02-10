@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Text, TextStyle, View, ViewStyle } from "react-native"
+import { Alert, Text, TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import {
@@ -85,7 +85,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           setDisplayResult(chooseSpecialAction(digit).toString())
           __DEV__ && console.log(chooseSpecialAction(digit))
           setNumber1(chooseSpecialAction(digit).toString())
-        
+
       }else if (numerals.includes(digit)) {
         setDisplayResult("")
         if (operand === "") {
@@ -206,6 +206,16 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       setSpecialOperand("")
     }
 
+    const ButtonAlert = () =>
+      Alert.alert(
+        "Bilgi",
+        "Bu uygulama Almira GÜRKAN tarafından tasarlanmıştır. e-mail ile iletişime geçebilirsiniz" +
+        "e-mail: almiraagurkan@gmail.com",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
+
 
     return (
       <View testID="DemoScreen" style={FULL}>
@@ -215,6 +225,8 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             headerTx="demoScreen.calculator"
             style={HEADER}
             titleStyle={HEADER_TITLE}
+            leftIcon="infoIcon"
+            onLeftPress={ButtonAlert}
           />
           <View style={FULL}>
             <View style={{flex:0.4, flexDirection: "column", justifyContent:"flex-end", alignItems:"flex-end", backgroundColor:"rgb(0,0,0)" }}>
