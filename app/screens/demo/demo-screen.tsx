@@ -209,7 +209,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     const ButtonAlert = () =>
       Alert.alert(
         "Bilgi",
-        "Bu uygulama Almira GÜRKAN tarafından tasarlanmıştır. e-mail ile iletişime geçebilirsiniz" +
+        "Bu uygulama Almira GÜRKAN tarafından tasarlanmıştır. E-mail ile iletişime geçebilirsiniz." + "\n" +
         "e-mail: almiraagurkan@gmail.com",
         [
           { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -225,7 +225,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             headerTx="demoScreen.calculator"
             style={HEADER}
             titleStyle={HEADER_TITLE}
-            leftIcon="infoIcon"
+            leftIcon="bug"
             onLeftPress={ButtonAlert}
           />
           <View style={FULL}>
