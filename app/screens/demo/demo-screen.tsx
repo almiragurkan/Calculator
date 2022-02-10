@@ -195,7 +195,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       return (Math.pow((parseFloat(number1)),3))
     }
     const exponential = (number1,number2) => {
-      return (Math.pow((parseFloat(number1)),number2))
+      return (Math.pow((parseFloat(number1)),(parseFloat(number2))))
     }
 
 
