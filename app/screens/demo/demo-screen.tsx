@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Alert, Text, TextStyle, View, ViewStyle } from "react-native"
+import { Text, TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import {
@@ -20,7 +20,6 @@ const HEADER: TextStyle = {
   paddingTop: spacing[3],
   paddingBottom: spacing[2] - 1,
   paddingHorizontal: 0,
-
 }
 const HEADER_TITLE: TextStyle = {
   ...BOLD,
@@ -30,10 +29,58 @@ const HEADER_TITLE: TextStyle = {
   letterSpacing: 1.5,
   color: "#696868",
 }
-
+const  DISPLAY: ViewStyle = {
+  flex:0.4,
+  flexDirection: "column",
+  justifyContent:"flex-end",
+  alignItems:"flex-end",
+  backgroundColor:"rgb(0,0,0)" }
+const DISPLAY_TEXT: TextStyle = {
+  color: "rgba(192,191,191,0.78)",
+  fontSize: 35,
+  paddingEnd: 10,
+  textAlign:"right"
+}
+const DISPLAY_RESULT_TEXT: TextStyle = {
+  color: "white",
+  fontSize: 55,
+  paddingEnd: 10,
+  textAlign:"right",
+  marginBottom: 25
+}
+const  KEYBOARD_BACK: ViewStyle = {
+  flex: 0.6,
+  flexDirection:"row"
+}
+const  STYLE_VIEW1: ViewStyle = {
+  flex:0.75,
+  flexDirection: "column",
+  alignContent:"space-around",
+  paddingTop:10, paddingStart:10,
+  paddingBottom:10
+}
+const STYLE_INNER_VIEW1: ViewStyle = {
+  flex:0.2,
+  flexDirection: "row"
+}
+const STYLE_VIEW2: ViewStyle = {
+  flex:0.25,
+  flexDirection: "column",
+  alignContent:"space-around",
+  paddingTop:10,
+  paddingEnd:10,
+  paddingBottom:10
+}
+const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = {
+  backgroundColor: "#052a34"
+}
+const STYLES_EQUAL_BUTTON_BASIC: ViewStyle = {
+  backgroundColor: "rgb(2,191,194)"
+}
 
 export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
+    const nextScreen = () => navigation.navigate("info")
 
     const [number1, setNumber1] = useState("")
     const [number2, setNumber2] = useState("")
@@ -61,8 +108,10 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             setDisplay(number1 + digit)
           }
         } else if (operand.length > 0) {
+          setOperand(digit)
           if (number2 === "") {
             setDisplayResult("")
+            setDisplay(number1 + digit)
             return null
           } else {
             setDisplayResult(chooseAction(operand).toString())
@@ -73,7 +122,6 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           }
         }
       }else if(specialOperands.includes(digit)){
-
           setSpecialOperand(digit)
           if (digit==="√" || digit==="∛"){
             setDisplay(digit + number1)
@@ -107,6 +155,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
           __DEV__ && console.log(chooseAction(operand))
           setNumber1(chooseAction(operand).toString())
           setNumber2("")
+
         }
       } else if (digit === "AC") {
         setDisplay("0")
@@ -206,16 +255,6 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
       setSpecialOperand("")
     }
 
-    const ButtonAlert = () =>
-      Alert.alert(
-        "Bilgi",
-        "Bu uygulama Almira GÜRKAN tarafından tasarlanmıştır. E-mail ile iletişime geçebilirsiniz." + "\n" +
-        "e-mail: almiraagurkan@gmail.com",
-        [
-          { text: "OK", onPress: () => console.log("OK Pressed") }
-        ]
-      );
-
 
     return (
       <View testID="DemoScreen" style={FULL}>
@@ -226,30 +265,21 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             style={HEADER}
             titleStyle={HEADER_TITLE}
             leftIcon="bug"
-            onLeftPress={ButtonAlert}
+            onLeftPress={nextScreen}
           />
           <View style={FULL}>
-            <View style={{flex:0.4, flexDirection: "column", justifyContent:"flex-end", alignItems:"flex-end", backgroundColor:"rgb(0,0,0)" }}>
-                <Text style={{
-                  color: "rgba(192,191,191,0.78)",
-                  fontSize: 35,
-                  paddingEnd: 10,
-                  textAlign:"right"
-                }}>
+            <View style={DISPLAY}>
+                <Text style={DISPLAY_TEXT}>
                   {display}
                 </Text>
-                <Text style={{
-                  color: "white", fontSize: 55, paddingEnd: 10,
-                  textAlign:"right",
-                  marginBottom: 25
-                }}>
+                <Text style={DISPLAY_RESULT_TEXT}>
                   {displayResult}
                 </Text>
             </View>
-            <View style={{ flex: 0.6, flexDirection:"row"}}>
+            <View style={KEYBOARD_BACK}>
               <GradientBackground colors={["#434343", "#000000"]} />
-              <View style={{ flex:0.75, flexDirection: "column",alignContent:"space-around", paddingTop:10, paddingStart:10, paddingBottom:10 }}>
-                <View style={{flex:0.2,flexDirection: "row"}}>
+              <View style={STYLE_VIEW1}>
+                <View style={STYLE_INNER_VIEW1}>
                   <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"√"}
                                  onPress={() => updateCalc("√")} />
                   <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"x²"}
@@ -257,7 +287,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
                   <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"^"}
                                  onPress={() => updateCalc("^")} />
                 </View>
-                <View style={{flex:0.2,flexDirection: "row"}}>
+                <View style={STYLE_INNER_VIEW1}>
                   <CustomButton  buttonName={"7"}
                                  onPress={() => updateCalc("7")} />
                   <CustomButton  buttonName={"8"}
@@ -266,7 +296,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
                                  onPress={() => updateCalc("9")} />
 
                 </View>
-                <View style={{flex:0.2,flexDirection: "row"}}>
+                <View style={STYLE_INNER_VIEW1}>
                   <CustomButton  buttonName={"4"}
                                  onPress={() => updateCalc("4")} />
                   <CustomButton  buttonName={"5"}
@@ -275,7 +305,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
                                  onPress={() => updateCalc("6")} />
 
                 </View>
-                <View style={{flex:0.2,flexDirection: "row"}}>
+                <View style={STYLE_INNER_VIEW1}>
                   <CustomButton  buttonName={"1"}
                                  onPress={() => updateCalc("1")} />
                   <CustomButton  buttonName={"2"}
@@ -284,7 +314,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
                                  onPress={() => updateCalc("3")} />
 
                 </View>
-                <View style={{flex:0.2,flexDirection: "row"}}>
+                <View style={STYLE_INNER_VIEW1}>
                   <CustomButton  buttonName={"."}
                                  onPress={() => updateCalc(".")} />
                   <CustomButton  buttonName={"0"}
@@ -292,9 +322,8 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
                   <CustomButton  buttonName={"AC"}
                                  onPress={() => updateCalc("AC")} />
                 </View>
-
               </View>
-              <View style={{ flex:0.25, flexDirection: "column",alignContent:"space-around", paddingTop:10, paddingEnd:10, paddingBottom:10 }}>
+              <View style={STYLE_VIEW2}>
                 <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"/"}
                                onPress={() => updateCalc("/")} />
                 <CustomButton buttonStyles={STYLES_OPERAND_BUTTON_BASIC} buttonName={"x"}
@@ -314,6 +343,3 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
     )
   },
 )
-
-const STYLES_OPERAND_BUTTON_BASIC: ViewStyle = { backgroundColor: "#052a34" }
-const STYLES_EQUAL_BUTTON_BASIC: ViewStyle = { backgroundColor: "rgb(2,191,194)" }

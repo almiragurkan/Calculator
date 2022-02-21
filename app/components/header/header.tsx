@@ -18,7 +18,7 @@ const ROOT: ViewStyle = {
 }
 const TITLE: TextStyle = { textAlign: "center" }
 const TITLE_MIDDLE: ViewStyle = { flex: 1, justifyContent: "center" }
-const LEFT: ViewStyle = { width: 32 }
+const LEFT: ViewStyle = { width: 32, marginLeft:12 }
 const RIGHT: ViewStyle = { width: 32 }
 
 /**
@@ -40,7 +40,7 @@ export function Header(props: HeaderProps) {
   return (
     <View style={[ROOT, style]}>
       {leftIcon ? (
-        <Button preset="link" onPress={onLeftPress}>
+        <Button style={LEFT} preset="link" onPress={onLeftPress}>
           <Icon icon={leftIcon} />
         </Button>
       ) : (

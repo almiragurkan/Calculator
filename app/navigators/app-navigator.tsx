@@ -10,6 +10,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { DemoScreen } from "../screens"
 import { navigationRef } from "./navigation-utilities"
+import { InfoScreen } from "../screens/info/info-screen"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,6 +28,7 @@ export type NavigatorParamList = {
   welcome: undefined
   demo: undefined
   demoList: undefined
+  info: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -41,6 +43,7 @@ const AppStack = () => {
       initialRouteName="demo"
     >
       <Stack.Screen name="demo" component={DemoScreen} />
+      <Stack.Screen name="info" component={InfoScreen} />
 
     </Stack.Navigator>
   )
